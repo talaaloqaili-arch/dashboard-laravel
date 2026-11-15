@@ -18,11 +18,25 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'password',
-    ];
+        'created_at',
+        'updated_at',
 
+    ];
+    public function lecturer()
+    {
+        return $this->hasOne(Lecturer::class);
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class)
+            ->withPivot('enrollment_date', 'grade')
+            ->withTimestamps();
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
